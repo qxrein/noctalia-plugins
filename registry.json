@@ -35,6 +35,17 @@
       "lastUpdated": "2025-12-07T16:04:14+01:00"
     },
     {
+      "id": "mini-docker",
+      "name": "Mini Docker",
+      "version": "1.0.0",
+      "author": "MannuVilasara",
+      "description": "Manage Docker containers, volumes.",
+      "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+      "minNoctaliaVersion": "3.6.0",
+      "license": "MIT",
+      "lastUpdated": "2025-12-13T18:44:49+05:30"
+    },
+    {
       "id": "privacy-indicator",
       "name": "Privacy Indicator",
       "version": "1.0.8",
