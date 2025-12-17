@@ -8,9 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2025-12-17
 
 ### Added
-- **Marketplace Panel**: Browse, pull, and run popular Docker images with one click
-- **One-Click Pull/Run**: Simplified workflow for new and existing images
-- **Expandable Details**: Click on any Container, Image, Volume, or Network to view detailed JSON output
+- **Expandable Details**: Click on any Container, Image, Volume, or Network to view detailed output
 - **Advanced Run Dialog**: Container name, Environment Variables support, and Network selection dropdown
 
 ### Changed
