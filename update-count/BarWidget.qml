@@ -65,10 +65,10 @@ Rectangle {
     MouseArea {
       anchors.fill: parent
       hoverEnabled: true
-      cursorShape: Qt.PointingHandCursor
+      cursorShape: root.pluginApi?.mainInstance?.updateCount > 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
 
       onClicked: {
-        root.pluginApi?.mainInstance?.startDoSystemUpdate();
+          root.pluginApi?.mainInstance?.startDoSystemUpdate();
       }
 
       onEntered: {

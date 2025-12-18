@@ -11,7 +11,6 @@ Item {
   readonly property int minutesToMillis: 60_000
 
   property int updateCount: 0
-  property string selectedUpdater: ""
   property bool isInitialized: false
 
   readonly property int updateIntervalMinutes: pluginApi?.pluginSettings.updateIntervalMinutes || pluginApi?.manifest?.metadata.defaultSettings?.updateIntervalMinutes || 30
@@ -98,19 +97,17 @@ Item {
       const label = entry ? entry.name : key;
 
       if (present) {
-        if (root.selectedUpdater === "") {
-          root.selectedUpdater = label;
-        }
         Logger.i("UpdateCount", `Detected command: ${label}.`);
       }
     }
 
     root.isInitialized = true
+
     Logger.i("UpdateCount", "Initialization finished.");
   }
 
   //
-  // ------ Functionality ------
+  // ------ Get number of updates ------
   //
   Timer {
     id: timerGetNumUpdates
@@ -132,14 +129,6 @@ Item {
         return e.cmdGetNumUpdates;
       }
     }
-
-    Logger.e(
-      "UpdateCount",
-      "No supported command to get the update count was found on your system. Install a supported helper " +
-      "(see README.md) or configure 'cmdGetNumUpdates' in the plugin settings."
-    );
-
-    return "printf '0\n'";
   }
 
   Process {
@@ -161,6 +150,9 @@ Item {
     getNumUpdates.running = true;
   }
 
+  //
+  // ------ Start update ------
+  //
   function findCmdDoSystemUpdate() {
     if (root.customCmdDoSystemUpdate != "") {
       return root.customCmdDoSystemUpdate;
@@ -172,31 +164,16 @@ Item {
         return e.cmdDoSystemUpdate;
       }
     }
-
-    Logger.e(
-      "UpdateCount",
-      "No supported system update command was found on your system. Install a supported helper (see README.md) " +
-      "or configure 'customCmdDoSystemUpdate' in the plugin settings."
-    );
-  }
-
-  function buildFullUpdateCommand() {
-    const term = root.updateTerminalCommand || "";
-    const cmd  = root.findCmdDoSystemUpdate() || "";
-
-    if (term.indexOf("{}") !== -1) {
-      return term.replace("{}", cmd);
-    }
-    return (term.trim() + " " + cmd).trim();
-  }
-
-  Process {
-    id: doSystemUpdate
-    command: ["sh", "-c", root.buildFullUpdateCommand()]
   }
 
   function startDoSystemUpdate() {
-    doSystemUpdate.running = true;
+    const term = root.updateTerminalCommand.trim();
+    const cmd  = root.findCmdDoSystemUpdate();
+
+    const fullCmd = (term.indexOf("{}") !== -1) ? term.replace("{}", cmd) : term + " " + cmd;
+
+    Quickshell.execDetached(["sh", "-c", fullCmd])
+    Logger.i("UpdateCount", `Executed update command: ${fullCmd}`)
   }
 
   //

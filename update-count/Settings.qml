@@ -119,10 +119,10 @@ ColumnLayout {
     }
 
     NSlider {
-      from: 1
+      from: 5
       to: 300
       value: root.updateIntervalMinutes
-      stepSize: 1
+      stepSize: 5
       onValueChanged: {
         root.updateIntervalMinutes = value;
       }
