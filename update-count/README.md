@@ -1,4 +1,4 @@
-# Update Indicator Plugin for Noctalia
+# Update Count Plugin
 
 A compact Noctalia bar widget that periodically checks for available system updates and displays the current update count. Clicking the widget spawns a terminal to execute the configured system update command.
 
