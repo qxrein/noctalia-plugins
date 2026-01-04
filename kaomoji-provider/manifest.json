@@ -1,0 +1,20 @@
+{
+  "id": "kaomoji-provider",
+  "name": "Kaomoji Provider",
+  "version": "1.0.0",
+  "description": "Browse and search kaomoji emoticons from the launcher",
+  "minNoctaliaVersion": "3.8.3",
+  "author": "Noctalia Team",
+  "license": "MIT",
+  "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+  "entryPoints": {
+    "launcherProvider": "LauncherProvider.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+    }
+  }
+}
