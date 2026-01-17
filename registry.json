@@ -31,6 +31,17 @@
       "lastUpdated": "2026-01-06T20:50:02-03:00"
     },
     {
+      "id": "dns-switcher",
+      "name": "DNS Switcher",
+      "version": "1.0.0",
+      "author": "Ronin-CK",
+      "description": "DNS Manager",
+      "minNoctaliaVersion": "4.0.0",
+      "license": "MIT",
+      "tags": [],
+      "lastUpdated": "2026-01-17T06:07:06+05:30"
+    },
+    {
       "id": "fancy-audiovisualizer",
       "name": "Fancy Audiovisualizer",
       "version": "1.0.7",
