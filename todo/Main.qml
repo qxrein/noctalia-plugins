@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell.Io
+import qs.Commons
 import qs.Services.UI
 
 Item {
@@ -48,7 +49,7 @@ Item {
       });
     }
 
-    function addTodo(text: string) {
+    function addTodo(text: string, pageId: int = 0) {
       if (pluginApi && text) {
         var todos = pluginApi.pluginSettings.todos || [];
 
@@ -57,7 +58,7 @@ Item {
           text: text,
           completed: false,
           createdAt: new Date().toISOString(),
-          pageId: 0
+          pageId: pageId
         };
 
         todos.push(newTodo);
