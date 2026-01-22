@@ -72,17 +72,18 @@ Item {
           root.tailscaleRunning = data.BackendState === "Running"
 
           if (root.tailscaleRunning && data.Self && data.Self.TailscaleIPs && data.Self.TailscaleIPs.length > 0) {
-            root.tailscaleIp = data.Self.TailscaleIPs[0]
+            root.tailscaleIp = data.Self.TailscaleIPs.filter(ip => ip.startsWith("100."))[0] || data.Self.TailscaleIPs[0]
             root.tailscaleStatus = "Connected"
 
             var peers = []
             if (data.Peer) {
               for (var peerId in data.Peer) {
                 var peer = data.Peer[peerId]
+                var ipv4s = peer.TailscaleIPs ? peer.TailscaleIPs.filter(ip => ip.startsWith("100.")) : []
                 peers.push({
                   "HostName": peer.HostName,
                   "DNSName": peer.DNSName,
-                  "TailscaleIPs": peer.TailscaleIPs,
+                  "TailscaleIPs": ipv4s,
                   "Online": peer.Online
                 })
               }

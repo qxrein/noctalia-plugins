@@ -159,11 +159,15 @@ Item {
                       text: {
                         var ips = []
                         if (modelData.TailscaleIPs && modelData.TailscaleIPs.length > 0) {
-                          ips = modelData.TailscaleIPs.slice(0, 2)
+                          ips = modelData.TailscaleIPs.filter(ip => ip.startsWith("100."))
                         }
                         return ips.join(", ")
                       }
-                      visible: modelData.TailscaleIPs && modelData.TailscaleIPs.length > 0
+                      visible: {
+                        if (!modelData.TailscaleIPs || modelData.TailscaleIPs.length === 0) return false
+                        var ipv4s = modelData.TailscaleIPs.filter(ip => ip.startsWith("100."))
+                        return ipv4s.length > 0
+                      }
                       pointSize: Style.fontSizeXS
                       color: Color.mOnSurfaceVariant
                       font.family: Settings.data.ui.fontFixed
