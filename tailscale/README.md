@@ -28,7 +28,7 @@ A Tailscale status plugin for Noctalia that shows your Tailscale connection stat
 | `showIpAddress` | true | Display your Tailscale IP address |
 | `showPeerCount` | true | Display the number of connected peers |
 | `hideDisconnected` | false | Hide the widget when Tailscale is disconnected |
-| `terminalCommand` | "" | Terminal command prefix for SSH (e.g., "ghostty -e") |
+| `terminalCommand` | "" | Terminal command prefix for SSH (e.g., `wezterm start --` or `ghostty`) |
 | `pingCount` | 5 | Number of pings to send when pinging a peer |
 
 ## IPC Commands
