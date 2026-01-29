@@ -7,32 +7,38 @@ import qs.Widgets
 
 Item {
   id: root
+  anchors.fill: parent
 
+  // Plugin integration
   property var pluginApi: null
   readonly property var geometryPlaceholder: panelContainer
   property real contentPreferredWidth: 700 * Style.uiScaleRatio
   property real contentPreferredHeight: 500 * Style.uiScaleRatio
   readonly property bool allowAttach: true
-  anchors.fill: parent
+
+  // Data models
   property ListModel todosModel: ListModel {}
   property ListModel filteredTodosModel: ListModel {}
-  property bool showCompleted: false
   property var rawTodos: []
-  property bool showEmptyState: false
 
-  // Timer to delay the empty state check
-  Timer {
-    id: emptyStateTimer
-    interval: 100
-    onTriggered: {
-      root.showEmptyState = (root.filteredTodosModel.count === 0);
-    }
-  }
+  // UI state
+  property bool showCompleted: false
+  property bool showEmptyState: filteredTodosModel.count === 0
 
+  // Auto-sync todos from plugin settings
   Binding {
     target: root
     property: "rawTodos"
     value: pluginApi?.pluginSettings?.todos || []
+  }
+
+  // Auto-sync showCompleted setting
+  Binding {
+    target: root
+    property: "showCompleted"
+    value: pluginApi?.pluginSettings?.showCompleted !== undefined
+           ? pluginApi.pluginSettings.showCompleted
+           : pluginApi?.manifest?.metadata?.defaultSettings?.showCompleted || false
   }
 
   function moveTodoToCorrectPosition(todoId) {
@@ -95,31 +101,25 @@ Item {
   Component.onCompleted: {
     if (pluginApi) {
       Logger.i("Todo", "Panel initialized");
-      root.showCompleted = pluginApi?.pluginSettings?.showCompleted !== undefined
-                           ? pluginApi.pluginSettings.showCompleted
-                           : pluginApi?.manifest?.metadata?.defaultSettings?.showCompleted || false;
-      // Reset the flag before loading
-      root.showEmptyState = false;
       loadTodos();
     }
   }
 
   function loadTodos() {
-    // Store the current scroll position
+    if (!pluginApi) return;
+
     var currentScrollPos = todoListView ? todoListView.contentY : 0;
+    var currentPageId = pluginApi.pluginSettings.current_page_id || 0;
 
     todosModel.clear();
     filteredTodosModel.clear();
 
-    var pluginTodos = root.rawTodos;
-    var currentPageId = pluginApi?.pluginSettings?.current_page_id || 0;
-
-    // Filter todos for the current page
-    var pageTodos = pluginTodos.filter(function(todo) {
+    // Filter todos for current page
+    var pageTodos = root.rawTodos.filter(function(todo) {
       return todo.pageId === currentPageId;
     });
 
-    // Populate both models in a single loop
+    // Populate models
     for (var i = 0; i < pageTodos.length; i++) {
       var todoItem = {
         id: pageTodos[i].id,
@@ -129,56 +129,23 @@ Item {
         pageId: pageTodos[i].pageId
       };
 
-      // Add to full model
       todosModel.append(todoItem);
 
-      // Add to filtered model if it meets criteria
-      if (showCompleted || !pageTodos[i].completed) {
+      if (showCompleted || !todoItem.completed) {
         filteredTodosModel.append(todoItem);
       }
     }
 
-    // Restore the scroll position
+    // Restore scroll position
     if (todoListView) {
-      Qt.callLater(function() {
-        todoListView.contentY = currentScrollPos;
-      });
-    }
-
-    // Start the timer to delay checking if the model is empty
-    emptyStateTimer.start();
-  }
-
-  onPluginApiChanged: {
-    if (pluginApi) {
-      // Reset the flag when plugin API changes
-      root.showEmptyState = false;
-      loadTodos();
+      todoListView.contentY = currentScrollPos;
     }
   }
 
-  // Watch for changes in the todos array length or showCompleted setting
-  property int previousTodosCount: -1
-
-  Timer {
-    id: settingsWatcher
-    interval: 100
-    running: !!pluginApi
-    repeat: true
-    onTriggered: {
-    var newShowCompleted = pluginApi?.pluginSettings?.showCompleted !== undefined
-                           ? pluginApi.pluginSettings.showCompleted
-                           : pluginApi?.manifest?.metadata?.defaultSettings?.showCompleted || false;
-      var currentTodos = pluginApi?.pluginSettings?.todos || [];
-      var currentTodosCount = currentTodos.length;
-
-      if (root.showCompleted !== newShowCompleted || root.previousTodosCount !== currentTodosCount) {
-        root.showCompleted = newShowCompleted;
-        root.previousTodosCount = currentTodosCount;
-        loadTodos();
-      }
-    }
-  }
+  // React to property changes instantly
+  onPluginApiChanged: loadTodos()
+  onRawTodosChanged: loadTodos()
+  onShowCompletedChanged: loadTodos()
 
   Rectangle {
     id: panelContainer
@@ -389,18 +356,12 @@ Item {
                 // Watch for editing property changes to handle focus
                 onEditingChanged: {
                     if (editing) {
-                        // Use a timer to delay the focus operation
-                        var timer = Qt.createQmlObject("
-                            import QtQuick 2.0;
-                            Timer {
-                                interval: 50;
-                                running: true;
-                                onTriggered: {
-                                    if (todoTextEdit && todoTextEdit.input) {
-                                        todoTextEdit.input.forceActiveFocus();
-                                    }
-                                }
-                            }", delegateItem);
+                        // Qt.callLater ensures TextField is ready before focusing
+                        Qt.callLater(function() {
+                            if (todoTextEdit) {
+                                todoTextEdit.forceActiveFocus();
+                            }
+                        });
                     }
                 }
 
