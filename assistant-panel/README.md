@@ -5,7 +5,7 @@ An AI Chat and Translation panel plugin for Noctalia Shell, inspired by the side
 ## Demo
 
 
-https://github.com/user-attachments/assets/1d73faff-1ef4-4f53-8e36-6d0d0bc8a5cd
+https://github.com/user-attachments/assets/0d1fb5eb-0b16-4ff4-a6ed-f78c196f756f
 
 
 ## Features
