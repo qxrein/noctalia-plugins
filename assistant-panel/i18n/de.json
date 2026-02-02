@@ -95,7 +95,6 @@
     "baseUrlDesc": "API-Endpunkt-URL",
     "baseUrlNote": "Hinweis: Dieses Plugin unterstützt derzeit nicht die neue OpenAI-Responses-API. Gehe zu ",
     "moreInfo": " für weitere Informationen.",
-    "localNotRunning": "Lokaler Server nicht erreichbar. Konfiguration überprüfen.",
     "panelSection": "Panel Einstellungen",
     "panelDetached": "Losgelöstes Panel",
     "panelDetachedDesc": "Panel als losgelöstes schwebendes Fenster anzeigen",
@@ -131,6 +130,7 @@
     "translationFailed": "Übersetzung fehlgeschlagen",
     "noDeeplKey": "Bitte konfiguriere deinen DeepL API-Key",
     "emptyResponse": "Leere Antwort",
-    "parseError": "Fehler beim Analysieren der Antwort"
+    "parseError": "Fehler beim Analysieren der Antwort",
+    "localNotRunning": "Lokaler Server nicht erreichbar. Konfiguration überprüfen."
   }
 }

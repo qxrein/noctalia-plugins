@@ -560,7 +560,6 @@ ColumnLayout {
     pluginApi.pluginSettings.panelPosition = root.editPanelPosition;
     pluginApi.pluginSettings.panelHeightRatio = root.editPanelHeightRatio;
     pluginApi.pluginSettings.panelWidth = root.editPanelWidth;
-    pluginApi.pluginSettings.panelWidth = root.editPanelWidth;
     pluginApi.pluginSettings.attachmentStyle = root.editAttachmentStyle;
     pluginApi.pluginSettings.scale = root.editScale;
 
