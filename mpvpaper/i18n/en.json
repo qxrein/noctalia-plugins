@@ -1,4 +1,10 @@
 {
+  "barWidget": {
+    "contextMenu": {
+      "toggle": "Toggle",
+      "panel": "Panel"
+    }
+  },
   "panel": {
     "title": "Configure mpvpaper",
     "buttons": {
