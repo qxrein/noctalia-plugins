@@ -4,8 +4,8 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.Services.UI
-import qs.UI
 import qs.Commons
+import qs.Widgets
 
 Item {
     id: panel
