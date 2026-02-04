@@ -1,9 +1,11 @@
 {
     "id": "calibre-provider",
     "name": "Calibre Provider",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Search for books in your Calibre library",
-    "tags": ["Launcher"],
+    "tags": [
+        "Launcher"
+    ],
     "minNoctaliaVersion": "4.3.0",
     "author": "Krendil",
     "official": false,
