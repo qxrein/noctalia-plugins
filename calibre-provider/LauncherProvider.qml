@@ -34,7 +34,7 @@ Item {
         }
         stderr: StdioCollector {
         }
-        onExited: root.parseDb(exitCode)
+        onExited: (exitCode) => root.parseDb(exitCode)
     }
 
      FileView {
@@ -158,7 +158,7 @@ Item {
           "description": entry.description || "",   // Secondary text (optional)
 
           // Icon options (choose one)
-          "icon": entry.cover || "book",                   // Icon name
+          "icon": hasCover ? entry.cover : "book",                   // Icon name
           "isTablerIcon": !hasCover,             // Use Tabler icon set
           "isImage": hasCover,                 // Is this an image?
           "hideIcon": false,                // Hide the icon entirely
@@ -178,7 +178,11 @@ Item {
     }
 
     function getImageUrl(modelData) {
-        return modelData.icon;
+        if( modelData.isImage) {
+            return modelData.icon;
+        } else {
+            return null;
+        }
     }
 
     function activateEntry(entry) {
