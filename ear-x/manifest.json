@@ -1,0 +1,29 @@
+{
+  "id": "ear-x",
+  "name": "Ear X",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.1.2",
+  "author": "Antigravity",
+  "official": false,
+  "license": "MIT",
+  "description": "Premium Control Center for Nothing Earbuds. Monitor battery, change EQ, and more.",
+  "tags": [
+    "Utility",
+    "Bluetooth",
+    "Nothing"
+  ],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "macAddress": "3C:B0:ED:B1:4D:DF",
+      "mockMode": true
+    }
+  }
+}

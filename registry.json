@@ -121,6 +121,22 @@
       "lastUpdated": "2026-01-26T23:59:29-05:00"
     },
     {
+      "id": "ear-x",
+      "name": "Ear X",
+      "version": "1.0.0",
+      "official": false,
+      "author": "Antigravity",
+      "description": "Premium Control Center for Nothing Earbuds. Monitor battery, change EQ, and more.",
+      "minNoctaliaVersion": "4.1.2",
+      "license": "MIT",
+      "tags": [
+        "Utility",
+        "Bluetooth",
+        "Nothing"
+      ],
+      "lastUpdated": null
+    },
+    {
       "id": "fancy-audiovisualizer",
       "name": "Fancy Audiovisualizer",
       "version": "1.0.7",
